@@ -36,8 +36,8 @@ public class MonsterH extends EnemyObjects {												//monster that moves fro
 
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
 			if (mapObject instanceof Blocks || mapObject instanceof SpecialBlocks) {
-				if (this.getBounds().intersects(mapObject.getBounds())) {
-					this.velX *= -1;
+				if (getBounds().intersects(mapObject.getBounds())) {
+					velX *= -1;
 				}
 			}
 		}

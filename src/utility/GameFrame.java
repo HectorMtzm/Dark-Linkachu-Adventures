@@ -50,14 +50,14 @@ public class GameFrame extends JFrame {
 	}
 
 	public void setup() {
-		raster = this.createImage(this.getWidth(), this.getHeight());
+		raster = createImage(getWidth(), getHeight());
 		rasterGraphics = raster.getGraphics();
 
-		Background = this.createImage(4164, this.getHeight());
+		Background = createImage(4164, getHeight());
 		DrawBackground(Background.getGraphics());
 
 		player = new Player();
-		this.addKeyListener(player);
+		addKeyListener(player);
 		cam = new Camera(0, 0);
 
 	}
@@ -133,7 +133,7 @@ public class GameFrame extends JFrame {
 			}
 
 			// Draw final Image
-			Graphics frameG = this.getGraphics();
+			Graphics frameG = getGraphics();
 			frameG.drawImage(raster, 0, 0, 960, 720, null);
 
 			try {

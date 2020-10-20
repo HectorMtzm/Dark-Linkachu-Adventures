@@ -19,7 +19,7 @@ public abstract class GameObjects {
 
 	public boolean isRight;
 	boolean isAlive = true;
-	float Gravity = 0.5f;
+	float gravity = 0.5f;
 	protected int width, height;
 	float velX = 0, velY = 0;
 	protected float x, y;

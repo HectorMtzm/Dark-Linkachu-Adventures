@@ -32,7 +32,7 @@ public class Flag extends MapObjects {									//objective 2
 	}
 
 	public void move() {
-		if (this.getBounds().intersects(GameFrame.getPlayer().getBounds()) && GameFrame.getPlayer().getNumOfGems() == 5) {
+		if (getBounds().intersects(GameFrame.getPlayer().getBounds()) && GameFrame.getPlayer().getNumOfGems() == 5) {
 			GameObjects.clearLvl();
 			level++;
 			if (level == 2)

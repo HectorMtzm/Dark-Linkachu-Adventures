@@ -17,9 +17,9 @@ public class Camera extends GameObjects {
 
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(GameFrame.cam.x, GameFrame.cam.y);
+		g2d.translate(x, y);
 		move(GameFrame.getPlayer());
-		g2d.translate(-GameFrame.cam.x, -GameFrame.cam.y);
+		g2d.translate(-x, -y);
 
 	}
 
@@ -29,11 +29,11 @@ public class Camera extends GameObjects {
 
 	public void move(Player player) {
 		if (GameFrame.getPlayer().getX() < 960 / 2 - 60)
-			GameFrame.cam.x=0;
+			x=0;
 		else if (GameFrame.getPlayer().getX() > 3500) {
-			GameFrame.cam.x = (3500 - (960 / 2 - 60));		//it teleport to the player position.
+			x = (3500 - (960 / 2 - 60));		//it teleport to the player position.
 		} else {
-			GameFrame.cam.x = (GameFrame.getPlayer().getX() - 420);
+			x = (GameFrame.getPlayer().getX() - 420);
 			// GameFrame.cam.setY(player.getY()-360);
 		}
 	}

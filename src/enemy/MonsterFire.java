@@ -22,7 +22,7 @@ public class MonsterFire extends EnemyObjects {											//static monster.
 
 	@Override
 	public void draw(Graphics g) {
-		if (GameFrame.getPlayer().getX() > this.x) {
+		if (GameFrame.getPlayer().getX() > x) {
 			g.drawImage(monsterFR, (int) x, (int) y, null);
 			isRight = true;												
 		} else {

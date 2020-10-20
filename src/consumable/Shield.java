@@ -21,8 +21,8 @@ public class Shield extends ConsumableObject {
 	}
 
 	public void move() {
-		if (this.getBounds().intersects(GameFrame.getPlayer().getBounds())) {
-			this.Die();
+		if (getBounds().intersects(GameFrame.getPlayer().getBounds())) {
+			Die();
 			sh.start();
 			GameFrame.getPlayer().setGuard(true);
 		}

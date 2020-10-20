@@ -39,14 +39,14 @@ public class Arrow extends ProjectileObjects {
 		x += velX;
 		for (MapObjects mapObject : GameFrame.getAllMapObjects()) {
 			if (mapObject instanceof Blocks) {
-				if (this.getBounds().intersects(mapObject.getBounds()))
-					this.Die();
+				if (getBounds().intersects(mapObject.getBounds()))
+					Die();
 			}
 		}
 		
 		for(EnemyObjects enemy : GameFrame.getAllEnemies()) {
-			if (this.getBounds().intersects(enemy.getBounds())) {
-				this.Die();
+			if (getBounds().intersects(enemy.getBounds())) {
+				Die();
 				enemy.Die();
 				enemy.monsterDie.start();
 			}

@@ -62,12 +62,12 @@ public class Player extends GameObjects implements KeyListener {
 		}
 		
 		g.drawImage(GameFrame.gbow, (int) GameFrame.cam.x + 20, 40, 70, 70, null);
-		g.drawString("" + this.arrows, (int) (GameFrame.cam.x + 60), 50);
+		g.drawString("" + arrows, (int) (GameFrame.cam.x + 60), 50);
 
 		g.drawImage(GameFrame.gems, (int) (GameFrame.cam.x + 120), 40, 69, 55, null);
-		g.drawString("" + this.numOfGems, (int) (GameFrame.cam.x + 185), 55);
+		g.drawString("" + numOfGems, (int) (GameFrame.cam.x + 185), 55);
 		if(GameFrame.getNumOfHearts() == 0){
-			g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (this.x-220), (int)this.y-70);  //end of the game
+			g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (x-220), (int)y-70);  //end of the game
 			g.drawString("Thanks for saving me Linkachu!! My handsome Prince ^_^ ", (int) 3500, 300);
 			g.drawImage(GameFrame.princess, 3700, 408, null);
 	
@@ -94,29 +94,29 @@ public class Player extends GameObjects implements KeyListener {
 			if (mapObject instanceof Spikes) {
 				if (superS) continue;
 				else {
-					if (this.getBounds().intersects(mapObject.getBounds())) {
-						die.start();
+					if (getBounds().intersects(mapObject.getBounds())) {
+//						die.start();
 						playerDie();
 					}
 				}
 			}
 			else if (mapObject instanceof Blocks || mapObject instanceof Floor) {
 				collisionTopSidesBottom(mapObject);
-				if (this.getBoundsTOP().intersects(mapObject.getBounds())) {
-					this.velY = 0;
-					Gravity = 0;
-					this.y = this.y + mapObject.getHeight() - mapObject.getHeight() + 1;
-					this.falling = true;
-					this.jump = false;
+				if (getBoundsTOP().intersects(mapObject.getBounds())) {
+					velY = 0;
+					gravity = 0;
+					y = y + mapObject.getHeight() - mapObject.getHeight() + 1;
+					falling = true;
+					jump = false;
 				}
 			}
 			else if (mapObject instanceof SpecialBlocks) {
-				if (this.getBoundsTOP().intersects(mapObject.getBounds())) {
-					this.y = this.y + 1;
-					this.velY = 0;
-					this.Gravity = 0;
-					this.falling = true;
-					this.jump = false;
+				if (getBoundsTOP().intersects(mapObject.getBounds())) {
+					y = y + 1;
+					velY = 0;
+					gravity = 0;
+					falling = true;
+					jump = false;
 					if (mapObject.hit == 1) {
 						System.out.println(((SpecialBlocks) mapObject).getObject());
 						mapObject.hit--;
@@ -135,7 +135,7 @@ public class Player extends GameObjects implements KeyListener {
 
 		for (EnemyObjects enemy : GameFrame.allEnemies){
 			if (enemy instanceof MonsterFire) {
-				if (this.getBounds().intersects(enemy.getBounds())) {
+				if (getBounds().intersects(enemy.getBounds())) {
 					if (guard) {
 						shield.start();
 						enemy.Die();
@@ -153,16 +153,16 @@ public class Player extends GameObjects implements KeyListener {
 			}
 
 			else if (enemy instanceof MonsterH || enemy instanceof MonsterV) {
-				if (this.getBoundsBottom().intersects(enemy.getBounds())) {
+				if (getBoundsBottom().intersects(enemy.getBounds())) {
 					enemy.Die();
 					enemy.monsterDie.start();
-					this.falling = false;
-					this.jump = true;
-					Gravity = 4;
+					falling = false;
+					jump = true;
+					gravity = 4;
 
 				}
 
-				else if (this.getBoundsLeft().intersects(enemy.getBounds())) {
+				else if (getBoundsLeft().intersects(enemy.getBounds())) {
 					if (guard) {
 						shield.start();
 						enemy.Die();
@@ -177,7 +177,7 @@ public class Player extends GameObjects implements KeyListener {
 					}
 				}
 
-				else if (this.getBoundsRight().intersects(enemy.getBounds())) {
+				else if (getBoundsRight().intersects(enemy.getBounds())) {
 					if (guard) {
 						shield.start();
 						enemy.Die();
@@ -192,7 +192,7 @@ public class Player extends GameObjects implements KeyListener {
 					}
 				}
 
-				else if (this.getBoundsTOP().intersects(enemy.getBounds())) {
+				else if (getBoundsTOP().intersects(enemy.getBounds())) {
 					if (guard) {
 						shield.start();
 						enemy.Die();
@@ -208,7 +208,7 @@ public class Player extends GameObjects implements KeyListener {
 				}
 				if (enemy instanceof Boss) {
 					if (superS) continue;
-					else if (this.getBounds().intersects(enemy.getBounds())) {
+					else if (getBounds().intersects(enemy.getBounds())) {
 						guard = false;
 						playerDie();
 //						die.start();
@@ -219,9 +219,9 @@ public class Player extends GameObjects implements KeyListener {
 
 		for (ConsumableObject consumable : GameFrame.allConsumables) {
 			if (consumable instanceof Gems) {
-				if (this.getBounds().intersects(consumable.getBounds())) {
+				if (getBounds().intersects(consumable.getBounds())) {
 					gem.start();
-					this.numOfGems++;
+					numOfGems++;
 					consumable.Die();
 				}
 			}
@@ -229,7 +229,7 @@ public class Player extends GameObjects implements KeyListener {
 
 		for (ProjectileObjects projectile : GameFrame.allProjectiles){
 			if (projectile instanceof FireBall) {
-				if (this.getBounds().intersects(projectile.getBounds())) {
+				if (getBounds().intersects(projectile.getBounds())) {
 					if (guard) {
 						shield.start();
 						projectile.Die();
@@ -263,17 +263,17 @@ public class Player extends GameObjects implements KeyListener {
 
 		}
 		if (jump) {
-			Gravity -= 0.1;
-			setVelY(-Gravity);
+			gravity -= 0.1;
+			setVelY(-gravity);
 
-			if (Gravity <= 0.0) {
+			if (gravity <= 0.0) {
 				jump = false;
 				falling = true;
 			}
 		}
 		if (falling) {
-			Gravity += 0.1;
-			setVelY(Gravity);
+			gravity += 0.1;
+			setVelY(gravity);
 		}
 		float timeElapsedS = (float) (System.currentTimeMillis() - takeStar);
 
@@ -300,23 +300,23 @@ public class Player extends GameObjects implements KeyListener {
 	}
 
 	private void collisionTopSidesBottom(MapObjects mapObject) {
-		if (this.getBoundsBottom().intersects(mapObject.getBounds())) {
-			this.y = this.y - 1;
+		if (getBoundsBottom().intersects(mapObject.getBounds())) {
+			y = y - 1;
 			this.velY = 0;
 			falling = false;
 		} else {
 			if (!falling && !jump) {
-				Gravity = 0.0f;
+				gravity = 0.0f;
 				falling = true;
 			}
 		}
-		if (this.getBoundsRight().intersects(mapObject.getBounds())) {
-			this.velX = 0;
-			this.x = this.x - mapObject.getWidth() + mapObject.getWidth() - 1;
+		if (getBoundsRight().intersects(mapObject.getBounds())) {
+			velX = 0;
+			x = x - mapObject.getWidth() + mapObject.getWidth() - 1;
 		}
-		if (this.getBoundsLeft().intersects(mapObject.getBounds())) {
-			this.velX = 0;
-			this.x = this.x - mapObject.getWidth() + mapObject.getWidth() + 1;
+		if (getBoundsLeft().intersects(mapObject.getBounds())) {
+			velX = 0;
+			x = x - mapObject.getWidth() + mapObject.getWidth() + 1;
 		}
 	}
 
@@ -324,7 +324,7 @@ public class Player extends GameObjects implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE && jump == false) {
 			jump = true;
 			falling = true;
-			Gravity = 6.8f;
+			gravity = 6.8f;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			right = true;

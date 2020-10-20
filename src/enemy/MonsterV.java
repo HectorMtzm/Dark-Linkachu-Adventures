@@ -35,8 +35,8 @@ public class MonsterV extends EnemyObjects {												//monster that moves up 
 
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
 			if (mapObject instanceof Blocks) {
-				if (this.getBounds().intersects(mapObject.getBounds())) {
-					this.velY *= -1;
+				if (getBounds().intersects(mapObject.getBounds())) {
+					velY *= -1;
 				}
 			}
 		}

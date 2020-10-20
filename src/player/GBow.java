@@ -28,8 +28,8 @@ public class GBow extends GameObjects {
 	}
 
 	public void move() {
-		if (this.getBounds().intersects(GameFrame.getPlayer().getBounds())) {
-			this.Die();
+		if (getBounds().intersects(GameFrame.getPlayer().getBounds())) {
+			Die();
 			GameFrame.getPlayer().arrows += 3;
 		}
 	}

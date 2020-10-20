@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 
 public class Star extends ConsumableObject {
 	public static java.awt.Image star = new ImageIcon("star.png").getImage();
-	float Gravity = .5f;
-	boolean JUMP = false, FALLING = true;
+	float gravity = .5f;
+	boolean jump = false, falling = true;
 
 	public Star(float x, float y) {
 		this.x = x;
@@ -31,44 +31,44 @@ public class Star extends ConsumableObject {
 	public void move() {
 		x += velX;
 		y += velY;
-		if (JUMP) {
-			Gravity -= 0.1;
-			setVelY(-Gravity);
+		if (jump) {
+			gravity -= 0.1;
+			setVelY(-gravity);
 
-			if (Gravity <= 0.0) {
-				JUMP = false;
-				FALLING = true;
+			if (gravity <= 0.0) {
+				jump = false;
+				falling = true;
 			}
 		}
-		if (FALLING) {
-			Gravity += 0.1;
-			setVelY(Gravity);
+		if (falling) {
+			gravity += 0.1;
+			setVelY(gravity);
 		}
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
 			if (mapObject instanceof Blocks || mapObject instanceof SpecialBlocks) {
-				if (this.getBoundsBottom().intersects(mapObject.getBounds())) {
-					this.y = this.y - 1;
-					this.velY = 0;
-					Gravity = 6;
-					FALLING = false;
-					JUMP = true;
+				if (getBoundsBottom().intersects(mapObject.getBounds())) {
+					y = y - 1;
+					velY = 0;
+					gravity = 6;
+					falling = false;
+					jump = true;
 				}
-				if (this.getBoundsTOP().intersects(mapObject.getBounds())) {
-					this.velY = 0;
-					Gravity = 0;
-					this.y = this.y + mapObject.getHeight() - mapObject.getHeight() + 1;
-					this.FALLING = true;
-					this.JUMP = false;
+				if (getBoundsTOP().intersects(mapObject.getBounds())) {
+					velY = 0;
+					gravity = 0;
+					y = y + mapObject.getHeight() - mapObject.getHeight() + 1;
+					falling = true;
+					jump = false;
 				}
-				if (this.getBoundsRight().intersects(mapObject.getBounds())) {
-					this.velX *= -1;
+				if (getBoundsRight().intersects(mapObject.getBounds())) {
+					velX *= -1;
 				}
-				if (this.getBoundsLeft().intersects(mapObject.getBounds())) {
-					this.velX *= -1;
+				if (getBoundsLeft().intersects(mapObject.getBounds())) {
+					velX *= -1;
 				}
 			}
-			if (this.getBounds().intersects(GameFrame.getPlayer().getBounds())) {
-				this.Die();
+			if (getBounds().intersects(GameFrame.getPlayer().getBounds())) {
+				Die();
 				GameFrame.getPlayer().setSuperS(true);
 				Player.setTakeStar(System.currentTimeMillis());
 
