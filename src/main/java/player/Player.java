@@ -20,8 +20,8 @@ public class Player extends GameObjects implements KeyListener {
 	static boolean CREATELEVEL1 = false;
 	Image playerR = new ImageIcon("src/main/resources/images/playerR.png").getImage();
 
-	boolean guard, superS, createGbow, createShield, createStar;				// Create power ups.
-	boolean shoot, right, left, jump = false, falling = true;												//Movement and actions.
+	boolean guard, superS, createGbow, createShield, createStar;
+	boolean shoot, right, left, jump = false, falling = true;
 	int numOfGems;
 	int arrows = 0;
 	long lastFireTime;
@@ -39,7 +39,7 @@ public class Player extends GameObjects implements KeyListener {
 
 	public void draw(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		if (isRight)
 			g.drawImage(playerR, (int) x, (int) y, null);
 		else
@@ -58,15 +58,15 @@ public class Player extends GameObjects implements KeyListener {
 		g.drawString("" + numOfGems, (int) (GameFrame.cam.x + 185), 55);
 		if(GameFrame.getNumOfHearts() == 0){
 			g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (x-220), (int)y-70);  //end of the game
-			g.drawString("Thanks for saving me Linkachu!! My handsome Prince ^_^ ", (int) 3500, 300);
+			g.drawString("Thanks for saving me Linkachu!! My handsome hero.", (int) 3500, 300);
 			g.drawImage(GameFrame.princess, 3700, 408, null);
 	
 		}
 		if(Flag.getLevel() == 1){
-			g.drawString("Space bar to jump", (int) 100, 200);
-			g.drawString("Long pressing the space bar will make you fall faster and jump higher", (int) 100, 250);
-			g.drawString("'X' to shoot", (int) 100, 300);
-			g.drawString("get the 5 gems and reach the flag to go to the next level", (int) 100, 400);
+			g.drawString("Space bar to jump", (int) 100, 150);
+			g.drawString("Long pressing the space bar will make you fall faster and jump higher", (int) 100, 200);
+			g.drawString("'X' to shoot", (int) 100, 250);
+			g.drawString("get the 5 gems and reach the flag to go to the next level", (int) 100, 300);
 			
 		}
 		
@@ -77,8 +77,11 @@ public class Player extends GameObjects implements KeyListener {
 	public void move() {
 		if (x < 0)
 			x = 0;
-		if (x > 3950)
-			x = 3950;
+		else if (x > GameFrame.getLevelWidth() - 90)
+			x = GameFrame.getLevelWidth() - 90;
+
+		if(y > GameFrame.getLevelHeight())
+			playerDie();
 
 		for (MapObjects mapObject : GameFrame.allMapObjects){
 			if (mapObject instanceof Spikes) {
@@ -90,7 +93,7 @@ public class Player extends GameObjects implements KeyListener {
 					}
 				}
 			}
-			else if (mapObject instanceof Blocks || mapObject instanceof Floor) {
+			else if (mapObject instanceof Blocks) {
 				collisionTopSidesBottom(mapObject);
 				if (getBoundsTOP().intersects(mapObject.getBounds())) {
 					velY = 0;
@@ -111,10 +114,10 @@ public class Player extends GameObjects implements KeyListener {
 						mapObject.hit--;
 						if (((SpecialBlocks) mapObject).getObject() == 1)
 							createGbow = true;
-						else if (((SpecialBlocks) mapObject).getObject() == 2)			// some Special blocks will create random power ups
+						else if (((SpecialBlocks) mapObject).getObject() == 2)
 							createShield = true;
 						else if (((SpecialBlocks) mapObject).getObject() == 3)
-							createStar =true;
+							createStar = true;
 					}
 				}
 				collisionTopSidesBottom(mapObject);
@@ -135,7 +138,6 @@ public class Player extends GameObjects implements KeyListener {
 					}
 					else {
 						playerDie();
-//						die.start();
 					}
 				}
 			}
@@ -238,11 +240,11 @@ public class Player extends GameObjects implements KeyListener {
 			new GBow(x, y - 180, 90, 90);
 			createGbow = false;
 		}
-		if (createShield) {
+		else if (createShield) {
 			new Shield(x, y - 180, 80, 80);				// the only way we found to create the objects while playing
 			createShield = false;
 		}
-		if (createStar) {
+		else if (createStar) {
 			new Star(x, y - 180);
 			createStar = false;
 		}

@@ -29,12 +29,14 @@ public class GameFrame extends JFrame {
 	public static Camera cam;
 	static Player player;
 	static Boss boss;
+	private static int levelHeight;
+	private static int levelWidth;
 	
 	public static Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
 	public static Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();		//top left images
 	public static Image gems = new ImageIcon("src/main/resources/images/gemY.png").getImage();
 	
-	public static Image princess = new ImageIcon("princess.png").getImage();
+	public static Image princess = new ImageIcon("src/main/resources/images/princess.png").getImage();
 
 	public static ArrayList<MapObjects> allMapObjects = new ArrayList<>();
 	public static ArrayList<EnemyObjects> allEnemies = new ArrayList<>();
@@ -233,5 +235,21 @@ public class GameFrame extends JFrame {
 
 	public static AffineTransform getIdentity() {
 		return identity;
+	}
+
+	public static int getLevelHeight() {
+		return levelHeight;
+	}
+
+	public static void setLevelHeight(int levelHeight) {
+		GameFrame.levelHeight = levelHeight;
+	}
+
+	public static int getLevelWidth() {
+		return levelWidth;
+	}
+
+	public static void setLevelWidth(int levelWidth) {
+		GameFrame.levelWidth = levelWidth;
 	}
 }

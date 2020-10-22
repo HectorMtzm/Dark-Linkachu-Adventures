@@ -1,33 +1,35 @@
 package utility;
 
+import consumable.Gems;
 import enemy.MonsterFire;
 import enemy.MonsterH;
 import enemy.MonsterV;
 import map_object.Blocks;
+import map_object.Flag;
 import map_object.SpecialBlocks;
 import map_object.Spikes;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class LevelCreator {
 
     public LevelCreator(String level) {
         try {
-
             File file = new File("src/main/resources/levels/" + level);
-
             Scanner scanner = new Scanner(file);
+
             int lineNum = 1;
-            int x,y;
-            while (lineNum < 8) {
+            int x, y;
+            int levelW = 0;
+
+            while (scanner.hasNextLine()) {
                 char[] data = scanner.nextLine().toCharArray();
+
+                if (data.length > levelW)
+                    levelW = data.length;
+
                 if (data.length == 0){
                     lineNum++;
                     continue;
@@ -46,26 +48,33 @@ public class LevelCreator {
                             new MonsterH(x, y, 1);
                             break;
                         case 'S':
-                            new SpecialBlocks(x,y, (int) 1);
-//                            new SpecialBlocks(x,y, (int) (1 + Math.random() * 2));
+                            new SpecialBlocks(x, y, (int) (Math.random() * (4 - 1)) + 1);
                             break;
                         case 'F':
-                            new MonsterFire(x,y);
+                            new MonsterFire(x, y);
                             break;
                         case 'T':
                             new Spikes(x,y + 64);   //90 - height = 64
                             break;
                         case 'V':
-                            new MonsterV(x,y,-1);
+                            new MonsterV(x, y,-1);
                             break;
                         case 'v':
-                            new MonsterV(x,y,1);
+                            new MonsterV(x, y,1);
                             break;
+                        case 'M':
+                            new Flag(x, y-100);
+                            break;
+                        case 'G':
+                            new Gems(x,y);
                     }
                 }
                 lineNum++;
             }
             scanner.close();
+
+            GameFrame.setLevelHeight(lineNum * 90);
+            GameFrame.setLevelWidth(levelW * 90);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

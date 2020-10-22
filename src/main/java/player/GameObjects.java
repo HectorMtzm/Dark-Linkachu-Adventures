@@ -39,11 +39,14 @@ public abstract class GameObjects {
 		Flag.setLevel(1);
 		Player.CREATELEVEL1 = true;
 		GameFrame.getPlayer().arrows=0;
+		GameFrame.getPlayer().guard=false;
+
 	}
 	
 	public static void clearLvl(){
 		GameFrame.getPlayer().setNumOfGems(0);
 		GameFrame.getPlayer().setX(100);
+		GameFrame.getPlayer().setY(500);
 		GameFrame.setNumOfHearts(5);
 		for (ConsumableObject consumable : GameFrame.allConsumables)
 			consumable.die();

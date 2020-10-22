@@ -29,13 +29,16 @@ public class Camera extends GameObjects {
 
 	public void move(Player player) {
 		if (GameFrame.getPlayer().getX() < 960 / 2 - 60)
-			x=0;
-		else if (GameFrame.getPlayer().getX() > 3500) {
-			x = (3500 - (960 / 2 - 60));		//it teleport to the main.java.player position.
-		} else {
+			x = 0;
+		else if (GameFrame.getPlayer().getX() > GameFrame.getLevelWidth())
+			x = (GameFrame.getLevelWidth() - (960 / 2 - 60));
+		else
 			x = (GameFrame.getPlayer().getX() - 420);
-			// GameFrame.cam.setY(main.java.player.getY()-360);
-		}
+
+		if (GameFrame.getPlayer().getY() < 500)
+			y = 0;
+		else
+			y = (GameFrame.getPlayer().getY() - 500);
 	}
 
 
