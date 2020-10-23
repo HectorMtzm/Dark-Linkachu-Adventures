@@ -1,16 +1,18 @@
 package projectile;
 
+import enemy.Boss;
 import enemy.EnemyObjects;
 import map_object.Blocks;
 import map_object.MapObjects;
 import utility.GameFrame;
+import utility.Sounds;
 
 import java.awt.*;
 
 import javax.swing.ImageIcon;
 
 public class Arrow extends ProjectileObjects {
-	Image arrowR = new ImageIcon("src/main/resources/images/ArrowR.png").getImage();
+	final Image arrowR = new ImageIcon("src/main/resources/images/Arrow.png").getImage();
 
 	int timeToLive = 60;
 
@@ -20,7 +22,7 @@ public class Arrow extends ProjectileObjects {
 		velX = i * 6;
 		this.x = x + 20;
 		this.y = y + 40;
-		GameFrame.sound.playSound(GameFrame.sound.arrow);
+		GameFrame.sound.playSound(Sounds.arrow);
 	}
 
 	public void draw(Graphics g) {
@@ -43,9 +45,11 @@ public class Arrow extends ProjectileObjects {
 		}
 		
 		for(EnemyObjects enemy : GameFrame.getAllEnemies()) {
-			if (getBounds().intersects(enemy.getBounds())) {
-				die();
-				enemy.die(false);
+			if(!(enemy instanceof Boss)){
+				if (getBounds().intersects(enemy.getBounds())) {
+					die();
+					enemy.die(false);
+				}
 			}
 		}
 		if (timeToLive <= 0)

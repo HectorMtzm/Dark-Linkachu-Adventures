@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 public class Blocks extends MapObjects {
 
-	static Image block = new ImageIcon("src/main/resources/images/block.png").getImage();
+	static final Image block = new ImageIcon("src/main/resources/images/block.png").getImage();
 
 	public Blocks(float x, float y) {
 		this.x = x;

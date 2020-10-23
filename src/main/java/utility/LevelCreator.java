@@ -1,6 +1,7 @@
 package utility;
 
 import consumable.Gems;
+import enemy.Boss;
 import enemy.MonsterFire;
 import enemy.MonsterH;
 import enemy.MonsterV;
@@ -50,11 +51,14 @@ public class LevelCreator {
                         case 'S':
                             new SpecialBlocks(x, y, (int) (Math.random() * (4 - 1)) + 1);
                             break;
+                        case 's':
+                            new SpecialBlocks(x, y, (int) (Math.random() * (3 - 1)) + 1);
+                            break;
                         case 'F':
                             new MonsterFire(x, y);
                             break;
                         case 'T':
-                            new Spikes(x,y + 64);   //90 - height = 64
+                            new Spikes(x,y + 70);
                             break;
                         case 'V':
                             new MonsterV(x, y,-1);
@@ -67,6 +71,13 @@ public class LevelCreator {
                             break;
                         case 'G':
                             new Gems(x,y);
+                            break;
+                        case 'A':
+                            new SpecialBlocks(x, y, 1);
+                            break;
+                        case 'X':
+                            new Boss(x - 78,y-232);
+                            break;
                     }
                 }
                 lineNum++;

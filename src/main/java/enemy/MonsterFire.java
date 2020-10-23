@@ -1,7 +1,6 @@
 package enemy;
 
 
-import enemy.EnemyObjects;
 import projectile.FireBall;
 import utility.GameFrame;
 
@@ -9,8 +8,10 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class MonsterFire extends EnemyObjects {											//static monster.
-	Image monsterFR = new ImageIcon("src/main/resources/images/monsterFR.png").getImage();
+// Monster that doesnt move.
+
+public class MonsterFire extends EnemyObjects {
+	final Image monsterFR = new ImageIcon("src/main/resources/images/monsterF.png").getImage();
 
 	int Rnum;
 

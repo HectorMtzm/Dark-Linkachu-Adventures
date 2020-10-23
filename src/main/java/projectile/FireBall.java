@@ -1,12 +1,13 @@
 package projectile;
 
 import utility.GameFrame;
+import utility.Sounds;
 
 import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class FireBall extends ProjectileObjects {
-	Image fireball = new ImageIcon("src/main/resources/images/fireball.png").getImage();
+	final Image fireball = new ImageIcon("src/main/resources/images/fireball.png").getImage();
 	int timeToLive = 100;
 
 	public FireBall(int v, int h, float x, float y) {
@@ -14,9 +15,9 @@ public class FireBall extends ProjectileObjects {
 		height = 20;
 		velX = v * 4;
 		velY = h * 4;
-		this.x = x + 20;
-		this.y = y + 35;
-		GameFrame.sound.playSound(GameFrame.sound.fireball);
+		this.x = x;
+		this.y = y;
+		GameFrame.sound.playSound(Sounds.fireball);
 	}
 
 	public void draw(Graphics g) {

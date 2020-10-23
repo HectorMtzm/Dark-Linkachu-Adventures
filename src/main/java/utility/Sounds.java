@@ -1,30 +1,28 @@
 package utility;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.sound.sampled.*;
 
 public class Sounds extends Thread{
 
-	private final int BUFFER_SIZE = 524288; //128Kb
 	private File soundFile;
-	private AudioInputStream audioStream;
-	private AudioFormat audioFormat;
-	private SourceDataLine sourceLine;
 
 	//Sounds
-	public static String youDie = "youDie.wav";
-	public static String shield = "shieldTake.wav";
-	public String arrow = "arrow.wav";
-	public String monsterDie = "monsterdie.wav";
-	public String hurtMonster = "hurtmonster.wav";
-	public String bossLevel = "bossLvl.wav";
-	public String bossDie = "bossDie.wav";
-	public String fireball = "fire.wav";
-	public String gem = "gem.wav";
+	public static final String bossLevel = "bosslvl.wav";
+	public static final String bossDie = "bossDie.wav";
+	public static final String youDie = "youDie.wav";
+	public static final String shield = "shieldTake.wav";
+	public static final String arrow = "arrow.wav";
+	public static final String monsterDie = "monsterdie.wav";
+	public static final String monsterHurt = "hurtmonster.wav";
+	public static final String fireball = "fire.wav";
+	public static final String gem = "gem.wav";
 	public String jump = "jump.wav";
 	public String spikes = "spikes.wav";
+
+	public Sounds() {
+	}
 
 	public void playSound(String soundName){
 		new Thread(() -> {

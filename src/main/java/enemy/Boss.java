@@ -4,13 +4,14 @@ import projectile.Arrow;
 import projectile.FireBall;
 import projectile.ProjectileObjects;
 import utility.GameFrame;
+import utility.Sounds;
 
 import java.awt.*;
 
 import javax.swing.ImageIcon;
 
 public class Boss extends EnemyObjects {
-	static Image bossR = new ImageIcon("src/main/resources/images/bossPR.png").getImage();
+	static final Image bossR = new ImageIcon("src/main/resources/images/bossP.png").getImage();
 	int Rnum;
 
 	public Boss(float x, float y) {
@@ -18,11 +19,13 @@ public class Boss extends EnemyObjects {
 		height = 325;
 		this.x = x;
 		this.y = y;
-		GameFrame.sound.playSound(GameFrame.sound.bossLevel);
+		GameFrame.sound.playSound(Sounds.bossLevel);
 	}
 
 	@Override
 	public void draw(Graphics g) {
+		g.drawRect((int) x, (int) y, width, height);
+		g.drawLine((int)x + (width/2),(int)y,(int)x+width/2, (int)y+height);
 		if (GameFrame.getPlayer().getX() > x) {
 			g.drawImage(bossR, (int) x, (int) y, width, height, null);
 			isRight = true;
@@ -50,16 +53,16 @@ public class Boss extends EnemyObjects {
 				new FireBall(0, -1, x + (width / 2), y);
 		}
 
-		for (ProjectileObjects projectile : GameFrame.getAllProjectiles()) {
+		for (ProjectileObjects projectile : GameFrame.allProjectiles) {
 			if (projectile instanceof Arrow) {
 				if (getBoundsTOP().intersects(projectile.getBounds()) || getBoundsBottom().intersects(projectile.getBounds())) {
 					if (GameFrame.getNumOfHearts() > 1) {
 						GameFrame.setNumOfHearts(GameFrame.getNumOfHearts() - 1);
-						GameFrame.sound.playSound(GameFrame.sound.arrow);
+						GameFrame.sound.playSound(Sounds.monsterHurt);
 					}
 					else{
 						die();
-						GameFrame.setNumOfHearts(GameFrame.getNumOfHearts() - 1);;
+						GameFrame.setNumOfHearts(GameFrame.getNumOfHearts() - 1);
 					}
 					projectile.die();
 				}
@@ -70,6 +73,6 @@ public class Boss extends EnemyObjects {
 
 	public void die(){
 		isAlive = false;
-		GameFrame.sound.playSound(GameFrame.sound.monsterDie);
+		GameFrame.sound.playSound(Sounds.bossDie);
 	}
 }

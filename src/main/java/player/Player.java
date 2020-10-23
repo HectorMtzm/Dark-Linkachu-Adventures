@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
 
 public class Player extends GameObjects implements KeyListener {
 	static boolean CREATELEVEL1 = false;
-	Image playerR = new ImageIcon("src/main/resources/images/playerR.png").getImage();
+	final Image playerR = new ImageIcon("src/main/resources/images/player.png").getImage();
 
 	boolean guard, superS, createGbow, createShield, createStar;
 	boolean shoot, right, left, jump = false, falling = true;
@@ -38,40 +38,13 @@ public class Player extends GameObjects implements KeyListener {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		if (isRight)
 			g.drawImage(playerR, (int) x, (int) y, null);
 		else
 			g.drawImage(playerR, (int) x + width, (int) y,-width, height, null);
-		if (guard) {
-			g.drawImage(GameFrame.getShield(), (int) (GameFrame.cam.x + 220), 40, 70, 70, null);
-		}
 		if(superS){
 			g.drawImage(Star.star, (int) x+35, (int)y-20, 30, 30, null);
 		}
-		
-		g.drawImage(GameFrame.gbow, (int) GameFrame.cam.x + 20, 40, 70, 70, null);
-		g.drawString("" + arrows, (int) (GameFrame.cam.x + 60), 50);
-
-		g.drawImage(GameFrame.gems, (int) (GameFrame.cam.x + 120), 40, 69, 55, null);
-		g.drawString("" + numOfGems, (int) (GameFrame.cam.x + 185), 55);
-		if(GameFrame.getNumOfHearts() == 0){
-			g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (x-220), (int)y-70);  //end of the game
-			g.drawString("Thanks for saving me Linkachu!! My handsome hero.", (int) 3500, 300);
-			g.drawImage(GameFrame.princess, 3700, 408, null);
-	
-		}
-		if(Flag.getLevel() == 1){
-			g.drawString("Space bar to jump", (int) 100, 150);
-			g.drawString("Long pressing the space bar will make you fall faster and jump higher", (int) 100, 200);
-			g.drawString("'X' to shoot", (int) 100, 250);
-			g.drawString("get the 5 gems and reach the flag to go to the next level", (int) 100, 300);
-			
-		}
-		
-		g.setColor(Color.RED);
-		
 	}
 
 	public void move() {
@@ -129,7 +102,7 @@ public class Player extends GameObjects implements KeyListener {
 			if (enemy instanceof MonsterFire) {
 				if (getBounds().intersects(enemy.getBounds())) {
 					if (guard) {
-						GameFrame.sound.playSound(GameFrame.sound.shield);
+						GameFrame.sound.playSound(Sounds.shield);
 						enemy.die(false);
 						guard = false;
 					}
@@ -153,7 +126,7 @@ public class Player extends GameObjects implements KeyListener {
 
 				else if (getBounds().intersects(enemy.getBounds())) {
 					if (guard) {
-						GameFrame.sound.playSound(GameFrame.sound.shield);
+						GameFrame.sound.playSound(Sounds.shield);
 						enemy.die(false);
 						guard = false;
 					} else if (superS) {
@@ -177,7 +150,7 @@ public class Player extends GameObjects implements KeyListener {
 		for (ConsumableObject consumable : GameFrame.allConsumables) {
 			if (consumable instanceof Gems) {
 				if (getBounds().intersects(consumable.getBounds())) {
-					GameFrame.sound.playSound(GameFrame.sound.gem);
+					GameFrame.sound.playSound(Sounds.gem);
 					numOfGems++;
 					consumable.die();
 				}
@@ -212,7 +185,7 @@ public class Player extends GameObjects implements KeyListener {
 
 		float timeElapsedA = (float) (System.currentTimeMillis() - lastFireTime);
 		if (shoot && timeElapsedA > 500 && arrows > 0) {
-			lastFireTime = System.currentTimeMillis();									//only can shoot every .5 seconds
+			lastFireTime = System.currentTimeMillis();
 			arrows--;
 			new Arrow(isRight ? 1 : -1, x, y);
 
@@ -232,7 +205,7 @@ public class Player extends GameObjects implements KeyListener {
 		}
 		float timeElapsedS = (float) (System.currentTimeMillis() - takeStar);
 
-		if (superS && timeElapsedS > 5000) {												//the star last 5 seconds
+		if (superS && timeElapsedS > 5000) {
 			superS = false;
 		}
 
@@ -241,7 +214,7 @@ public class Player extends GameObjects implements KeyListener {
 			createGbow = false;
 		}
 		else if (createShield) {
-			new Shield(x, y - 180, 80, 80);				// the only way we found to create the objects while playing
+			new Shield(x, y - 180, 80, 80);
 			createShield = false;
 		}
 		else if (createStar) {
@@ -276,7 +249,7 @@ public class Player extends GameObjects implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && jump == false) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && !jump) {
 			jump = true;
 			falling = true;
 			gravity = 6.8f;
@@ -339,5 +312,9 @@ public class Player extends GameObjects implements KeyListener {
 
 	public int getArrows() {
 		return arrows;
+	}
+
+	public boolean isGuard() {
+		return guard;
 	}
 }

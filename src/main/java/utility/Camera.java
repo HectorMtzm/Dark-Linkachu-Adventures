@@ -41,6 +41,4 @@ public class Camera extends GameObjects {
 			y = (GameFrame.getPlayer().getY() - 500);
 	}
 
-
-
 }

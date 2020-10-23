@@ -4,11 +4,13 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class SpecialBlocks extends MapObjects {
-	Image specialBlocks = new ImageIcon("src/main/resources/images/specialBlock.png").getImage();
-	int object;
+//Creates a random power up when the player hits it from below
 
-	public SpecialBlocks(float x, float y, int object) { //Create power up when the main.java.player hit it from below
+public class SpecialBlocks extends MapObjects {
+	final Image specialBlocks = new ImageIcon("src/main/resources/images/specialBlock.png").getImage();
+	final int object;
+
+	public SpecialBlocks(float x, float y, int object) {
 		this.x = x;
 		this.y = y;
 		width = 90;
@@ -29,9 +31,5 @@ public class SpecialBlocks extends MapObjects {
 
 	public int getObject() {
 		return object;
-	}
-
-	public void setObject(int object) {
-		this.object = object;
 	}
 }

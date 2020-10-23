@@ -10,7 +10,6 @@ public abstract class ConsumableObject {
     int width, height;
     float velX = 0, velY = 0;
     float x, y;
-    public int hit;
 
     public ConsumableObject() {
         GameFrame.allConsumables.add(this);
@@ -38,35 +37,15 @@ public abstract class ConsumableObject {
     }
 
     public Rectangle getBoundsLeft() {
-        return new Rectangle((int) x + 5, (int) y + 5, 5, height - 10);															//four side boundaries
+        return new Rectangle((int) x + 5, (int) y + 5, 5, height - 10);
     }
 
     public Rectangle getBoundsRight() {
         return new Rectangle((int) x + width - 10, (int) y + 5, 5, height - 10);
     }
 
-    public void setVelX(float x) {
-        velX = x;
-    }
-
     public void setVelY(float y) {
         velY = y;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public void setY(float y) {
-        this.y = y;
     }
 
     public boolean isAlive() {

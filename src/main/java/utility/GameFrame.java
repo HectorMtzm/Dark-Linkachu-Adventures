@@ -3,6 +3,7 @@ package utility;
 import consumable.ConsumableObject;
 import enemy.Boss;
 import enemy.EnemyObjects;
+import map_object.Flag;
 import map_object.MapObjects;
 import player.GameObjects;
 import player.Player;
@@ -18,42 +19,37 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame {
 
-	Image raster;
-	Graphics rasterGraphics;
-	Image Background;
+	private Image raster;
+	private Graphics g;
+	static final boolean GameRunning = true;
+
 	public static Sounds sound;
-	static boolean GameRunning = true;
+	public static Camera cam;
 
 	static int numOfHearts = 5;
-	static AffineTransform identity = new AffineTransform();
-	public static Camera cam;
-	static Player player;
-	static Boss boss;
+	static final AffineTransform identity = new AffineTransform();
+	private static Player player;
 	private static int levelHeight;
 	private static int levelWidth;
-	
-	public static Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
-	public static Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();		//top left images
-	public static Image gems = new ImageIcon("src/main/resources/images/gemY.png").getImage();
-	
+
+	private final Image Background = new ImageIcon("src/main/resources/images/background.png").getImage();
+	private static final Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
+	private static final Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();
+	private static final Image gems = new ImageIcon("src/main/resources/images/gemY.png").getImage();
 	public static Image princess = new ImageIcon("src/main/resources/images/princess.png").getImage();
 
-	public static ArrayList<MapObjects> allMapObjects = new ArrayList<>();
-	public static ArrayList<EnemyObjects> allEnemies = new ArrayList<>();
-	public static ArrayList<ConsumableObject> allConsumables = new ArrayList<>();
-	public static ArrayList<ProjectileObjects> allProjectiles = new ArrayList<>();
-	public static ArrayList<GameObjects> AllGameObjects = new ArrayList<>();
+	public static final ArrayList<MapObjects> allMapObjects = new ArrayList<>();
+	public static final ArrayList<EnemyObjects> allEnemies = new ArrayList<>();
+	public static final ArrayList<ConsumableObject> allConsumables = new ArrayList<>();
+	public static final ArrayList<ProjectileObjects> allProjectiles = new ArrayList<>();
+	public static final ArrayList<GameObjects> AllGameObjects = new ArrayList<>();
 
-	private void DrawBackground(Graphics g) {
-		Background = new ImageIcon("src/main/resources/images/background.png").getImage();
-	}
+
+
 
 	public void setup() {
 		raster = createImage(getWidth(), getHeight());
-		rasterGraphics = raster.getGraphics();
-
-		Background = createImage(4164, getHeight());
-		DrawBackground(Background.getGraphics());
+		g = raster.getGraphics();
 
 		new LevelCreator("level1");
 
@@ -62,7 +58,6 @@ public class GameFrame extends JFrame {
 		addKeyListener(player);
 
 		sound = new Sounds();
-
 	}
 
 	public void run() {
@@ -120,19 +115,42 @@ public class GameFrame extends JFrame {
 			}
 
 			// draw background
-			rasterGraphics.drawImage(Background, -100, -100, 4200, 1800, null);
+			g.drawImage(Background, -100, -100, 4200, 1800, null);
 
 			// draw any game objects
 			for (GameObjects gameObject2 : AllGameObjects)
-				gameObject2.draw(rasterGraphics);
+				gameObject2.draw(g);
 			for(EnemyObjects enemy2 : allEnemies)
-				enemy2.draw(rasterGraphics);
+				enemy2.draw(g);
 			for(ConsumableObject consumable2 : allConsumables)
-				consumable2.draw(rasterGraphics);
+				consumable2.draw(g);
 			for(ProjectileObjects projectile2 : allProjectiles)
-				projectile2.draw(rasterGraphics);
+				projectile2.draw(g);
 			for(MapObjects mapObject2 : allMapObjects){
-				mapObject2.draw(rasterGraphics);
+				mapObject2.draw(g);
+			}
+
+			//Draw UI
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+			g.drawImage(gbow, (int)cam.getX() + 20, (int)cam.getY() + 40, 70, 70, null);
+			g.drawString("" + player.getArrows(), (int)cam.getX() + 60, (int)cam.getY() + 50);
+			g.drawImage(gems, (int)cam.getX() + 120, (int)cam.getY() + 40, 69, 55, null);
+			g.drawString("" + player.getNumOfGems(), (int) cam.getX() + 185, (int)cam.getY() + 55);
+			if (player.isGuard()) {
+				g.drawImage(shield, (int)cam.getX() + 220, (int)cam.getY() + 40, 70, 70, null);
+			}
+//			if(getNumOfHearts() == 0){
+//				g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (x-220), (int)y-70);  //end of the game
+//				g.drawString("Thanks for saving me Linkachu!! My handsome hero <3", (int) 3500, 300);
+//				g.drawImage(GameFrame.getPrincess(), 3700, 408, null);
+//			}
+			if(Flag.getLevel() == 1){
+				g.drawString("Space bar to jump",100, 150);
+				g.drawString("Long pressing the space bar will make you fall faster and jump higher",100, 200);
+				g.drawString("'X' to shoot",100, 250);
+				g.drawString("get the 5 gems and reach the flag to go to the next level", 100, 300);
+
 			}
 
 			// Draw final Image
@@ -157,48 +175,12 @@ public class GameFrame extends JFrame {
 		GameFrame.numOfHearts = numOfHearts;
 	}
 
-	public static Image getGbow() {
-		return gbow;
-	}
-
-	public static void setGbow(Image gbow) {
-		GameFrame.gbow = gbow;
-	}
-
-	public static Image getShield() {
-		return shield;
-	}
-
-	public static void setShield(Image shield) {
-		GameFrame.shield = shield;
-	}
-
-	public static Image getGems() {
-		return gems;
-	}
-
-	public static void setGems(Image gems) {
-		GameFrame.gems = gems;
-	}
-
-	public static Image getPrincess() {
-		return princess;
-	}
-
 	public static void setPrincess(Image princess) {
 		GameFrame.princess = princess;
 	}
 
-	public static Camera getCam() {
-		return cam;
-	}
-
 	public static Player getPlayer() {
 		return player;
-	}
-
-	public static Boss getBoss() {
-		return boss;
 	}
 
 	public static ArrayList<MapObjects> getAllMapObjects() {
@@ -215,22 +197,6 @@ public class GameFrame extends JFrame {
 
 	public static ArrayList<ProjectileObjects> getAllProjectiles() {
 		return allProjectiles;
-	}
-
-	public static void setAllMapObjects(ArrayList<MapObjects> allMapObjects) {
-		GameFrame.allMapObjects = allMapObjects;
-	}
-
-	public static void setAllEnemies(ArrayList<EnemyObjects> allEnemies) {
-		GameFrame.allEnemies = allEnemies;
-	}
-
-	public static void setAllConsumables(ArrayList<ConsumableObject> allConsumables) {
-		GameFrame.allConsumables = allConsumables;
-	}
-
-	public static void setAllProjectiles(ArrayList<ProjectileObjects> allProjectiles) {
-		GameFrame.allProjectiles = allProjectiles;
 	}
 
 	public static AffineTransform getIdentity() {

@@ -6,6 +6,7 @@ import map_object.Flag;
 import map_object.MapObjects;
 import projectile.ProjectileObjects;
 import utility.GameFrame;
+import utility.Sounds;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -13,12 +14,11 @@ import java.awt.Rectangle;
 public abstract class GameObjects {
 
 	public boolean isRight;
-	boolean isAlive = true;
+	final boolean isAlive = true;
 	float gravity = 0.5f;
 	protected int width, height;
 	float velX = 0, velY = 0;
 	protected float x, y;
-	public int hit;
 
 	public GameObjects() {
 		GameFrame.AllGameObjects.add(this);
@@ -28,13 +28,9 @@ public abstract class GameObjects {
 
 	public abstract void move();
 
-	public void die() {
-		isAlive = false;
-	}
-
 	// Return main.java.player to level 1
 	public void playerDie(){
-		GameFrame.sound.playSound(GameFrame.sound.youDie);
+		GameFrame.sound.playSound(Sounds.youDie);
 		clearLvl();
 		Flag.setLevel(1);
 		Player.CREATELEVEL1 = true;
@@ -59,7 +55,6 @@ public abstract class GameObjects {
 	}
 	
 	public Rectangle getBounds() {
-		// System.out.println(getX() + " " + getY());
 		return new Rectangle((int) x + 5, (int) y, width - 10, height);
 	}
 

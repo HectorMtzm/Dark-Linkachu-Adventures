@@ -10,8 +10,10 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class MonsterH extends EnemyObjects {												//monster that moves from left to right
-	static Image monsterH = new ImageIcon("src/main/resources/images/monsterB.png").getImage();
+// Monster that moves horizontally
+
+public class MonsterH extends EnemyObjects {
+	static final Image monsterH = new ImageIcon("src/main/resources/images/monsterB.png").getImage();
 	int Rnum;
 
 	public MonsterH(float x, float y, int velX) {
@@ -31,7 +33,7 @@ public class MonsterH extends EnemyObjects {												//monster that moves fro
 	public void move() {
 		Rnum = (int) (1 + Math.random() * 400);				//shoots randomly
 		if (Rnum == 26)
-			new FireBall(0, GameFrame.getPlayer().getY() > y ? 1 : -1, x, y);
+			new FireBall(0, GameFrame.getPlayer().getY() > y ? 1 : -1,x + (width/2),y  + (height/2));
 		x += velX;
 
 		for (MapObjects mapObject : GameFrame.allMapObjects) {

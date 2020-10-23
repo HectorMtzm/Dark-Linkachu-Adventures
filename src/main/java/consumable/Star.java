@@ -11,7 +11,7 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class Star extends ConsumableObject {
-	public static Image star = new ImageIcon("src/main/resources/images/star.png").getImage();
+	public static final Image star = new ImageIcon("src/main/resources/images/star.png").getImage();
 	float gravity = .5f;
 	boolean jump = false, falling = true;
 

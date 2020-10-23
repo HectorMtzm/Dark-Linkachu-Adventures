@@ -9,7 +9,7 @@ import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 
 public class GBow extends ConsumableObject {
-	static Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();;
+	static final Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
 
 	public GBow(float x, float y, int width, int height) {
 		this.x = x;

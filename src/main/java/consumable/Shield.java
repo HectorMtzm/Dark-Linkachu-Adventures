@@ -8,7 +8,7 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class Shield extends ConsumableObject {
-	static Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();
+	static final Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();
 
 	public Shield(float x, float y, int width, int height) {
 		this.x = x;

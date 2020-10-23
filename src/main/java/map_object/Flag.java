@@ -3,6 +3,7 @@ package map_object;
 
 import player.GameObjects;
 import utility.GameFrame;
+import utility.LevelCreator;
 
 import java.awt.*;
 
@@ -10,9 +11,8 @@ import javax.swing.ImageIcon;
 
 public class Flag extends MapObjects {									//objective 2
 	boolean CREATELEVEL2, CREATELEVEL3, CREATEBOSSLEVEL;
-	long gameOver;
 
-	static Image flag = new ImageIcon("src/main/resources/images/flagg.png").getImage();
+	static final Image flag = new ImageIcon("src/main/resources/images/flagg.png").getImage();
 	static int level = 1;
 
 	public Flag(float x, float y) {
@@ -39,17 +39,17 @@ public class Flag extends MapObjects {									//objective 2
 		}
 		if (CREATELEVEL2) {
 			GameFrame.getPlayer().setArrows(0);
-
+			new LevelCreator("level2");
 			CREATELEVEL2 = false;
 		}
 		if (CREATELEVEL3) {
 			GameFrame.getPlayer().setArrows(0);
-
+			new LevelCreator("level3");
 			CREATELEVEL3=false;
 		}
 		if (CREATEBOSSLEVEL) {
 			GameFrame.getPlayer().setArrows(0);
-
+			new LevelCreator("level4");
 			CREATEBOSSLEVEL = false;
 		}
 	}
