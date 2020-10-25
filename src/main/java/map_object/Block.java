@@ -4,11 +4,11 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class Blocks extends MapObjects {
+public class Block extends MapObjects {
 
 	static final Image block = new ImageIcon("src/main/resources/images/block.png").getImage();
 
-	public Blocks(float x, float y) {
+	public Block(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.width = 90;

@@ -23,7 +23,7 @@ public class SpecialBlocks extends MapObjects {
 		if (hit == 1)
 			g.drawImage(specialBlocks, (int) x, (int) y, null);
 		else
-			g.drawImage(Blocks.block, (int) x, (int) y, null);
+			g.drawImage(Block.block, (int) x, (int) y, null);
 	}
 
 	public void move() {

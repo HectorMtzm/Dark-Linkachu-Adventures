@@ -1,6 +1,6 @@
 package enemy;
 
-import map_object.Blocks;
+import map_object.Block;
 import map_object.MapObjects;
 import map_object.SpecialBlocks;
 import projectile.FireBall;
@@ -37,7 +37,7 @@ public class MonsterH extends EnemyObjects {
 		x += velX;
 
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
-			if (mapObject instanceof Blocks || mapObject instanceof SpecialBlocks) {
+			if (mapObject instanceof Block || mapObject instanceof SpecialBlocks) {
 				if (getBounds().intersects(mapObject.getBounds())) {
 					velX *= -1;
 				}

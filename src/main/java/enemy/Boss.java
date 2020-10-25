@@ -24,8 +24,6 @@ public class Boss extends EnemyObjects {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawRect((int) x, (int) y, width, height);
-		g.drawLine((int)x + (width/2),(int)y,(int)x+width/2, (int)y+height);
 		if (GameFrame.getPlayer().getX() > x) {
 			g.drawImage(bossR, (int) x, (int) y, width, height, null);
 			isRight = true;
@@ -66,7 +64,6 @@ public class Boss extends EnemyObjects {
 					}
 					projectile.die();
 				}
-
 			}
 		}
 	}

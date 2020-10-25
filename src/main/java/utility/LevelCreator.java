@@ -5,10 +5,7 @@ import enemy.Boss;
 import enemy.MonsterFire;
 import enemy.MonsterH;
 import enemy.MonsterV;
-import map_object.Blocks;
-import map_object.Flag;
-import map_object.SpecialBlocks;
-import map_object.Spikes;
+import map_object.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +37,7 @@ public class LevelCreator {
                     y = lineNum * 90;
                     switch (data[i]){
                         case 'B':
-                            new Blocks(x, y);
+                            new Block(x, y);
                             break;
                         case 'H':
                             new MonsterH(x, y, -1);
@@ -66,14 +63,17 @@ public class LevelCreator {
                         case 'v':
                             new MonsterV(x, y,1);
                             break;
-                        case 'M':
-                            new Flag(x, y-100);
-                            break;
                         case 'G':
                             new Gems(x,y);
                             break;
                         case 'A':
                             new SpecialBlocks(x, y, 1);
+                            break;
+                        case 'b':
+                            new BlockU(x, y);
+                            break;
+                        case 'M':
+                            new Flag(x, y-100);
                             break;
                         case 'X':
                             new Boss(x - 78,y-232);

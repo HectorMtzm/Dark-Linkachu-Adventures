@@ -1,6 +1,6 @@
 package consumable;
 
-import map_object.Blocks;
+import map_object.Block;
 import map_object.MapObjects;
 import map_object.SpecialBlocks;
 import player.Player;
@@ -45,7 +45,7 @@ public class Star extends ConsumableObject {
 			setVelY(gravity);
 		}
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
-			if (mapObject instanceof Blocks || mapObject instanceof SpecialBlocks) {
+			if (mapObject instanceof Block || mapObject instanceof SpecialBlocks) {
 				if (getBoundsBottom().intersects(mapObject.getBounds())) {
 					y = y - 1;
 					velY = 0;

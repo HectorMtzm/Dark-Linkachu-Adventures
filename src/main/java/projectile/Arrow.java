@@ -2,7 +2,7 @@ package projectile;
 
 import enemy.Boss;
 import enemy.EnemyObjects;
-import map_object.Blocks;
+import map_object.Block;
 import map_object.MapObjects;
 import utility.GameFrame;
 import utility.Sounds;
@@ -37,14 +37,14 @@ public class Arrow extends ProjectileObjects {
 	public void move() {
 		timeToLive--;
 		x += velX;
-		for (MapObjects mapObject : GameFrame.getAllMapObjects()) {
-			if (mapObject instanceof Blocks) {
+		for (MapObjects mapObject : GameFrame.allMapObjects) {
+			if (mapObject instanceof Block) {
 				if (getBounds().intersects(mapObject.getBounds()))
 					die();
 			}
 		}
 		
-		for(EnemyObjects enemy : GameFrame.getAllEnemies()) {
+		for(EnemyObjects enemy : GameFrame.allEnemies) {
 			if(!(enemy instanceof Boss)){
 				if (getBounds().intersects(enemy.getBounds())) {
 					die();

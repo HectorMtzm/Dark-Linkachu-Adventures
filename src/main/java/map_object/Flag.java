@@ -10,7 +10,7 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class Flag extends MapObjects {									//objective 2
-	boolean CREATELEVEL2, CREATELEVEL3, CREATEBOSSLEVEL;
+	boolean createLevel2, createLevel3, createBossLevel;
 
 	static final Image flag = new ImageIcon("src/main/resources/images/flagg.png").getImage();
 	static int level = 1;
@@ -31,26 +31,26 @@ public class Flag extends MapObjects {									//objective 2
 			GameObjects.clearLvl();
 			level++;
 			if (level == 2)
-				CREATELEVEL2 = true;
+				createLevel2 = true;
 			else if (level == 3)
-				CREATELEVEL3 = true;
+				createLevel3 = true;
 			else
-				CREATEBOSSLEVEL = true;
+				createBossLevel = true;
 		}
-		if (CREATELEVEL2) {
+		if (createLevel2) {
 			GameFrame.getPlayer().setArrows(0);
 			new LevelCreator("level2");
-			CREATELEVEL2 = false;
+			createLevel2 = false;
 		}
-		if (CREATELEVEL3) {
+		if (createLevel3) {
 			GameFrame.getPlayer().setArrows(0);
 			new LevelCreator("level3");
-			CREATELEVEL3=false;
+			createLevel3 =false;
 		}
-		if (CREATEBOSSLEVEL) {
+		if (createBossLevel) {
 			GameFrame.getPlayer().setArrows(0);
 			new LevelCreator("level4");
-			CREATEBOSSLEVEL = false;
+			createBossLevel = false;
 		}
 	}
 

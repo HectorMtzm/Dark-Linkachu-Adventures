@@ -5,6 +5,7 @@ import enemy.Boss;
 import enemy.EnemyObjects;
 import map_object.Flag;
 import map_object.MapObjects;
+import map_object.UntouchableObjects;
 import player.GameObjects;
 import player.Player;
 import projectile.ProjectileObjects;
@@ -43,6 +44,7 @@ public class GameFrame extends JFrame {
 	public static final ArrayList<ConsumableObject> allConsumables = new ArrayList<>();
 	public static final ArrayList<ProjectileObjects> allProjectiles = new ArrayList<>();
 	public static final ArrayList<GameObjects> AllGameObjects = new ArrayList<>();
+	public static final ArrayList<UntouchableObjects> allUntouchableObjects = new ArrayList<>();
 
 
 
@@ -67,6 +69,7 @@ public class GameFrame extends JFrame {
 			GameObjects gameObject;
 			ConsumableObject consumable;
 			MapObjects mapObject;
+			UntouchableObjects uObject;
 
 			// move any game objects
 			for (int i = 0; i < allEnemies.size(); i++) {
@@ -113,6 +116,13 @@ public class GameFrame extends JFrame {
 					i--;
 				}
 			}
+			for (int i = 0; i < allUntouchableObjects.size(); i++) {
+				uObject = allUntouchableObjects.get(i);
+				if (!uObject.isAlive()) {
+					allUntouchableObjects.remove(uObject);
+					i--;
+				}
+			}
 
 			// draw background
 			g.drawImage(Background, -100, -100, 4200, 1800, null);
@@ -126,9 +136,11 @@ public class GameFrame extends JFrame {
 				consumable2.draw(g);
 			for(ProjectileObjects projectile2 : allProjectiles)
 				projectile2.draw(g);
-			for(MapObjects mapObject2 : allMapObjects){
+			for(MapObjects mapObject2 : allMapObjects)
 				mapObject2.draw(g);
-			}
+			for(UntouchableObjects uObject2 : allUntouchableObjects)
+				uObject2.draw(g);
+
 
 			//Draw UI
 			g.setColor(Color.WHITE);
@@ -140,11 +152,11 @@ public class GameFrame extends JFrame {
 			if (player.isGuard()) {
 				g.drawImage(shield, (int)cam.getX() + 220, (int)cam.getY() + 40, 70, 70, null);
 			}
-//			if(getNumOfHearts() == 0){
-//				g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (x-220), (int)y-70);  //end of the game
-//				g.drawString("Thanks for saving me Linkachu!! My handsome hero <3", (int) 3500, 300);
-//				g.drawImage(GameFrame.getPrincess(), 3700, 408, null);
-//			}
+			if(getNumOfHearts() == 0){
+				g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (player.getX() - 220), (int)player.getY() - 70);  //end of the game
+				g.drawString("Thanks for saving me Linkachu!! My handsome hero <3", (int) 3500, 300);
+				g.drawImage(princess, 3700, 408, null);
+			}
 			if(Flag.getLevel() == 1){
 				g.drawString("Space bar to jump",100, 150);
 				g.drawString("Long pressing the space bar will make you fall faster and jump higher",100, 200);
@@ -183,21 +195,6 @@ public class GameFrame extends JFrame {
 		return player;
 	}
 
-	public static ArrayList<MapObjects> getAllMapObjects() {
-		return allMapObjects;
-	}
-
-	public static ArrayList<EnemyObjects> getAllEnemies() {
-		return allEnemies;
-	}
-
-	public static ArrayList<ConsumableObject> getAllConsumables() {
-		return allConsumables;
-	}
-
-	public static ArrayList<ProjectileObjects> getAllProjectiles() {
-		return allProjectiles;
-	}
 
 	public static AffineTransform getIdentity() {
 		return identity;

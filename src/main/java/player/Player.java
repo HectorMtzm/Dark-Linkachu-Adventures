@@ -66,7 +66,7 @@ public class Player extends GameObjects implements KeyListener {
 					}
 				}
 			}
-			else if (mapObject instanceof Blocks) {
+			else if (mapObject instanceof Block) {
 				collisionTopSidesBottom(mapObject);
 				if (getBoundsTOP().intersects(mapObject.getBounds())) {
 					velY = 0;

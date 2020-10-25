@@ -4,6 +4,7 @@ import consumable.ConsumableObject;
 import enemy.EnemyObjects;
 import map_object.Flag;
 import map_object.MapObjects;
+import map_object.UntouchableObjects;
 import projectile.ProjectileObjects;
 import utility.GameFrame;
 import utility.Sounds;
@@ -46,12 +47,14 @@ public abstract class GameObjects {
 		GameFrame.setNumOfHearts(5);
 		for (ConsumableObject consumable : GameFrame.allConsumables)
 			consumable.die();
-		for (EnemyObjects enemy : GameFrame.getAllEnemies())
+		for (EnemyObjects enemy : GameFrame.allEnemies)
 			enemy.die(true);
 		for (ProjectileObjects projectile : GameFrame.allProjectiles)
 			projectile.die();
 		for (MapObjects mapObject : GameFrame.allMapObjects)
 			mapObject.die();
+		for (UntouchableObjects uObject : GameFrame.allUntouchableObjects)
+			uObject.die();
 	}
 	
 	public Rectangle getBounds() {

@@ -1,7 +1,7 @@
 package enemy;
 
 
-import map_object.Blocks;
+import map_object.Block;
 import map_object.MapObjects;
 import projectile.FireBall;
 import utility.GameFrame;
@@ -37,7 +37,7 @@ public class MonsterV extends EnemyObjects {
 		y += velY;
 
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
-			if (mapObject instanceof Blocks) {
+			if (mapObject instanceof Block) {
 				if (getBounds().intersects(mapObject.getBounds())) {
 					velY *= -1;
 				}
