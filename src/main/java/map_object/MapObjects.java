@@ -38,5 +38,13 @@ public abstract class MapObjects {
     public boolean isAlive() {
         return isAlive;
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getX() {
+        return x;
+    }
 }
 

@@ -11,11 +11,11 @@ import javax.swing.ImageIcon;
 public class GBow extends ConsumableObject {
 	static final Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
 
-	public GBow(float x, float y, int width, int height) {
+	public GBow(float x, float y) {
 		this.x = x;
 		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.width = 90;
+		this.height = 90;
 	}
 
 	public void draw(Graphics g) {

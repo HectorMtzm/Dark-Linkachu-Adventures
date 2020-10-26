@@ -93,10 +93,6 @@ public class GameFrame extends JFrame {
 			for (int i = 0; i < AllGameObjects.size(); i++) {
 				gameObject = AllGameObjects.get(i);
 				gameObject.move();
-				if (!gameObject.isAlive()) {
-					AllGameObjects.remove(gameObject);
-					i--;
-				}
 			}
 
 			for (int i = 0; i < allConsumables.size(); i++) {
@@ -153,13 +149,12 @@ public class GameFrame extends JFrame {
 				g.drawImage(shield, (int)cam.getX() + 220, (int)cam.getY() + 40, 70, 70, null);
 			}
 			if(getNumOfHearts() == 0){
-				g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (player.getX() - 220), (int)player.getY() - 70);  //end of the game
-				g.drawString("Thanks for saving me Linkachu!! My handsome hero <3", (int) 3500, 300);
+				g.drawString("CONGRATULATIONS! You're alright buddy. Stay in school!", (int) (player.getX() - 220), (int)player.getY() - 70);
+				g.drawString("Thanks for saving me Linkachu!! My handsome hero <3", (int) 2000, 300);
 				g.drawImage(princess, 3700, 408, null);
 			}
 			if(Flag.getLevel() == 1){
-				g.drawString("Space bar to jump",100, 150);
-				g.drawString("Long pressing the space bar will make you fall faster and jump higher",100, 200);
+				g.drawString("Space bar to jump",100, 200);
 				g.drawString("'X' to shoot",100, 250);
 				g.drawString("get the 5 gems and reach the flag to go to the next level", 100, 300);
 

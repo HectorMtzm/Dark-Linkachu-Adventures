@@ -32,6 +32,7 @@ public class Boss extends EnemyObjects {
 			isRight = false;
 		}
 		if (GameFrame.getNumOfHearts() > 0) {
+			g.setColor(Color.red);
 			for (int i = 0, heartDistance = 30; i < GameFrame.getNumOfHearts(); i++, heartDistance += 30)
 				g.fillRect((int) x + heartDistance + 10, (int) y - 30, 30, 8);
 		}

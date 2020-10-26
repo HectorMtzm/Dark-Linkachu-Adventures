@@ -9,7 +9,7 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
-public class Flag extends MapObjects {									//objective 2
+public class Flag extends MapObjects {
 	boolean createLevel2, createLevel3, createBossLevel;
 
 	static final Image flag = new ImageIcon("src/main/resources/images/flagg.png").getImage();

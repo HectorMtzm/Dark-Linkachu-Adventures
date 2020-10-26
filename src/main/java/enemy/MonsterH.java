@@ -20,7 +20,7 @@ public class MonsterH extends EnemyObjects {
 		width = 90;
 		height = 65;
 		this.x = x;
-		this.y = y;
+		this.y = y + 1;
 		this.velX = velX;
 	}
 
@@ -31,7 +31,7 @@ public class MonsterH extends EnemyObjects {
 	
 	@Override
 	public void move() {
-		Rnum = (int) (1 + Math.random() * 400);				//shoots randomly
+		Rnum = (int) (1 + Math.random() * 400);
 		if (Rnum == 26)
 			new FireBall(0, GameFrame.getPlayer().getY() > y ? 1 : -1,x + (width/2),y  + (height/2));
 		x += velX;

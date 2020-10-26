@@ -15,8 +15,7 @@ import java.awt.Rectangle;
 public abstract class GameObjects {
 
 	public boolean isRight;
-	final boolean isAlive = true;
-	float gravity = 0.5f;
+	float gravity = 0.1f;
 	protected int width, height;
 	float velX = 0, velY = 0;
 	protected float x, y;
@@ -29,7 +28,7 @@ public abstract class GameObjects {
 
 	public abstract void move();
 
-	// Return main.java.player to level 1
+	// Returns player to level 1
 	public void playerDie(){
 		GameFrame.sound.playSound(Sounds.youDie);
 		clearLvl();
@@ -37,14 +36,14 @@ public abstract class GameObjects {
 		Player.CREATELEVEL1 = true;
 		GameFrame.getPlayer().arrows=0;
 		GameFrame.getPlayer().guard=false;
-
 	}
-	
+
 	public static void clearLvl(){
 		GameFrame.getPlayer().setNumOfGems(0);
 		GameFrame.getPlayer().setX(100);
 		GameFrame.getPlayer().setY(500);
 		GameFrame.setNumOfHearts(5);
+
 		for (ConsumableObject consumable : GameFrame.allConsumables)
 			consumable.die();
 		for (EnemyObjects enemy : GameFrame.allEnemies)
@@ -56,12 +55,12 @@ public abstract class GameObjects {
 		for (UntouchableObjects uObject : GameFrame.allUntouchableObjects)
 			uObject.die();
 	}
-	
+
 	public Rectangle getBounds() {
 		return new Rectangle((int) x + 5, (int) y, width - 10, height);
 	}
 
-	public Rectangle getBoundsTOP() {
+	public Rectangle getBoundsTop() {
 		return new Rectangle((int) x + (width / 2 - 5) - ((width / 2) / 2), (int) y, width / 2 + 10, height / 2);
 	}
 
@@ -75,14 +74,6 @@ public abstract class GameObjects {
 
 	public Rectangle getBoundsRight() {
 		return new Rectangle((int) x + width - 10, (int) y + 5, 5, height - 10);
-	}
-
-	public void setVelX(float x) {
-		velX = x;
-	}
-
-	public void setVelY(float y) {
-		velY = y;
 	}
 
 	public float getX() {
@@ -99,9 +90,5 @@ public abstract class GameObjects {
 
 	public void setY(float y) {
 		this.y = y;
-	}
-
-	public boolean isAlive() {
-		return isAlive;
 	}
 }

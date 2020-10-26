@@ -33,7 +33,7 @@ public class Star extends ConsumableObject {
 		y += velY;
 		if (jump) {
 			gravity -= 0.1;
-			setVelY(-gravity);
+			velY = -gravity;
 
 			if (gravity <= 0.0) {
 				jump = false;
@@ -42,7 +42,7 @@ public class Star extends ConsumableObject {
 		}
 		if (falling) {
 			gravity += 0.1;
-			setVelY(gravity);
+			velY = gravity;
 		}
 		for (MapObjects mapObject : GameFrame.allMapObjects) {
 			if (mapObject instanceof Block || mapObject instanceof SpecialBlocks) {
@@ -70,7 +70,7 @@ public class Star extends ConsumableObject {
 			if (getBounds().intersects(GameFrame.getPlayer().getBounds())) {
 				die();
 				GameFrame.getPlayer().setSuperS(true);
-				Player.setTakeStar(System.currentTimeMillis());
+				GameFrame.getPlayer().setTakeStar(System.currentTimeMillis());
 
 			}
 

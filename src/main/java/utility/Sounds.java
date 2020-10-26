@@ -36,6 +36,7 @@ public class Sounds extends Thread{
 				Clip clip = AudioSystem.getClip();
 				AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundFile);
 				clip.open(inputStream);
+				FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN); gainControl.setValue(-10.0f);
 				clip.start();
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -10,11 +10,11 @@ import javax.swing.ImageIcon;
 public class Shield extends ConsumableObject {
 	static final Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();
 
-	public Shield(float x, float y, int width, int height) {
+	public Shield(float x, float y) {
 		this.x = x;
 		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.width = 90;
+		this.height = 90;
 	}
 
 	public void draw(Graphics g) {

@@ -17,7 +17,7 @@ public class FireBall extends ProjectileObjects {
 		velY = h * 4;
 		this.x = x;
 		this.y = y;
-		if (Math.abs(GameFrame.getPlayer().getX()) - x < 300)
+		if (Math.abs(GameFrame.getPlayer().getX() - x) < 1000)
 			GameFrame.sound.playSound(Sounds.fireball);
 	}
 

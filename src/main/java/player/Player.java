@@ -20,12 +20,14 @@ public class Player extends GameObjects implements KeyListener {
 	static boolean CREATELEVEL1 = false;
 	final Image playerR = new ImageIcon("src/main/resources/images/player.png").getImage();
 
-	boolean guard, superS, createGbow, createShield, createStar;
-	boolean shoot, right, left, jump = false, falling = true;
+	boolean jumping = false, falling = true;
+	boolean moveRight, moveLeft;
+	boolean guard, superS;
+	boolean shoot;
 	int numOfGems;
 	int arrows = 0;
 	long lastFireTime;
-	static long takeStar;
+	long takeStar;
 
 	public Player() {
 		x = 20;
@@ -42,18 +44,21 @@ public class Player extends GameObjects implements KeyListener {
 			g.drawImage(playerR, (int) x, (int) y, null);
 		else
 			g.drawImage(playerR, (int) x + width, (int) y,-width, height, null);
-		if(superS){
+		if (superS){
 			g.drawImage(Star.star, (int) x+35, (int)y-20, 30, 30, null);
 		}
 	}
 
 	public void move() {
+		gravity = 0.1f;
+		velY += gravity;
+
 		if (x < 0)
 			x = 0;
 		else if (x > GameFrame.getLevelWidth() - 90)
 			x = GameFrame.getLevelWidth() - 90;
 
-		if(y > GameFrame.getLevelHeight())
+		if (y > GameFrame.getLevelHeight())
 			playerDie();
 
 		for (MapObjects mapObject : GameFrame.allMapObjects){
@@ -68,46 +73,43 @@ public class Player extends GameObjects implements KeyListener {
 			}
 			else if (mapObject instanceof Block) {
 				collisionTopSidesBottom(mapObject);
-				if (getBoundsTOP().intersects(mapObject.getBounds())) {
+				if (getBoundsTop().intersects(mapObject.getBounds())) {
 					velY = 0;
-					gravity = 0;
 					y = y + mapObject.getHeight() - mapObject.getHeight() + 1;
 					falling = true;
-					jump = false;
+					jumping = false;
 				}
 			}
 			else if (mapObject instanceof SpecialBlocks) {
-				if (getBoundsTOP().intersects(mapObject.getBounds())) {
+				if (getBoundsTop().intersects(mapObject.getBounds())) {
 					y = y + 1;
 					velY = 0;
-					gravity = 0;
 					falling = true;
-					jump = false;
 					if (mapObject.hit == 1) {
 						mapObject.hit--;
 						if (((SpecialBlocks) mapObject).getObject() == 1)
-							createGbow = true;
+							new GBow(mapObject.getX(), mapObject.getY() - 90);
 						else if (((SpecialBlocks) mapObject).getObject() == 2)
-							createShield = true;
-						else if (((SpecialBlocks) mapObject).getObject() == 3)
-							createStar = true;
+							new Shield(mapObject.getX(), mapObject.getY() - 90);
+						else {
+							new Star(mapObject.getX(), mapObject.getY() - 90);
+						}
 					}
 				}
 				collisionTopSidesBottom(mapObject);
 			}
-
 		}
 
 		for (EnemyObjects enemy : GameFrame.allEnemies){
 			if (enemy instanceof MonsterFire) {
 				if (getBounds().intersects(enemy.getBounds())) {
-					if (guard) {
+					if (superS) {
+						enemy.die(false);
+					}
+					else if (guard) {
 						GameFrame.sound.playSound(Sounds.shield);
 						enemy.die(false);
 						guard = false;
-					}
-					else if (superS) {
-						enemy.die(false);
 					}
 					else {
 						playerDie();
@@ -118,10 +120,8 @@ public class Player extends GameObjects implements KeyListener {
 			else if (enemy instanceof MonsterH || enemy instanceof MonsterV) {
 				if (getBoundsBottom().intersects(enemy.getBounds())) {
 					enemy.die(false);
+					velY = -5f;
 					falling = false;
-					jump = true;
-					gravity = 4;
-
 				}
 
 				else if (getBounds().intersects(enemy.getBounds())) {
@@ -160,12 +160,15 @@ public class Player extends GameObjects implements KeyListener {
 		for (ProjectileObjects projectile : GameFrame.allProjectiles){
 			if (projectile instanceof FireBall) {
 				if (getBounds().intersects(projectile.getBounds())) {
-					if (guard) {
+					if (superS) {
+						projectile.die();
+					}
+					else if (guard) {
 						projectile.die();
 						guard = false;
-					} else if (superS) {
-						projectile.die();
-					} else {
+						GameFrame.sound.playSound(Sounds.shield);
+					}
+					else {
 						playerDie();
 					}
 				}
@@ -174,53 +177,24 @@ public class Player extends GameObjects implements KeyListener {
 
 		x += velX;
 		y += velY;
-		if (right) {
+		if (moveRight)
 			velX = 2;
-
-		}
-		if (left) {
+		if (moveLeft)
 			velX = -2;
 
-		}
-
-		float timeElapsedA = (float) (System.currentTimeMillis() - lastFireTime);
+		long timeElapsedA = System.currentTimeMillis() - lastFireTime;
 		if (shoot && timeElapsedA > 500 && arrows > 0) {
 			lastFireTime = System.currentTimeMillis();
 			arrows--;
 			new Arrow(isRight ? 1 : -1, x, y);
+		}
 
-		}
-		if (jump) {
-			gravity -= 0.1;
-			setVelY(-gravity);
-
-			if (gravity <= 0.0) {
-				jump = false;
-				falling = true;
-			}
-		}
-		if (falling) {
-			gravity += 0.1;
-			setVelY(gravity);
-		}
-		float timeElapsedS = (float) (System.currentTimeMillis() - takeStar);
+		long timeElapsedS = System.currentTimeMillis() - takeStar;
 
 		if (superS && timeElapsedS > 5000) {
 			superS = false;
 		}
 
-		if (createGbow) {
-			new GBow(x, y - 180, 90, 90);
-			createGbow = false;
-		}
-		else if (createShield) {
-			new Shield(x, y - 180, 80, 80);
-			createShield = false;
-		}
-		else if (createStar) {
-			new Star(x, y - 180);
-			createStar = false;
-		}
 		if(CREATELEVEL1){
 			new LevelCreator("level1");
 			CREATELEVEL1=false;
@@ -229,42 +203,42 @@ public class Player extends GameObjects implements KeyListener {
 
 	private void collisionTopSidesBottom(MapObjects mapObject) {
 		if (getBoundsBottom().intersects(mapObject.getBounds())) {
-			y = y - 1;
-			this.velY = 0;
-			falling = false;
-		} else {
-			if (!falling && !jump) {
-				gravity = 0.0f;
-				falling = true;
-			}
+			y = mapObject.getY() - 88;
+			jumping = false;
+			gravity = 0;
+			velY = 0;
 		}
+
 		if (getBoundsRight().intersects(mapObject.getBounds())) {
 			velX = 0;
-			x = x - mapObject.getWidth() + mapObject.getWidth() - 1;
+
+			if (!getBoundsLeft().intersects(mapObject.getBounds()) && moveLeft)
+				velX -= 1;
 		}
-		if (getBoundsLeft().intersects(mapObject.getBounds())) {
+		else if (getBoundsLeft().intersects(mapObject.getBounds())) {
 			velX = 0;
-			x = x - mapObject.getWidth() + mapObject.getWidth() + 1;
+
+			if (!getBoundsRight().intersects(mapObject.getBounds()) && moveRight)
+				velX += 1;
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_SPACE && !jump) {
-			jump = true;
-			falling = true;
-			gravity = 6.8f;
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && !jumping) {
+			y -= 1;
+			velY = -6.8f;
+			jumping = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			right = true;
+			moveRight = true;
 			isRight = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			left = true;
+			moveLeft = true;
 			isRight = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_X) {
 			shoot = true;
-
 		}
 	}
 
@@ -274,12 +248,12 @@ public class Player extends GameObjects implements KeyListener {
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			right = false;
-			setVelX(0);
+			moveRight = false;
+			velX = 0;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			left = false;
-			setVelX(0);
+			moveLeft = false;
+			velX = 0;
 		}
 	}
 
@@ -298,8 +272,8 @@ public class Player extends GameObjects implements KeyListener {
 		this.superS = superS;
 	}
 
-	public static void setTakeStar(long takeStar) {
-		Player.takeStar = takeStar;
+	public void setTakeStar(long takeStar) {
+		this.takeStar = takeStar;
 	}
 
 	public void setGuard(boolean guard) {

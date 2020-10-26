@@ -30,7 +30,6 @@ public abstract class EnemyObjects {
 	}
 	
 	public Rectangle getBounds() {
-		// System.out.println(getX() + " " + getY());
 		return new Rectangle((int) x + 5, (int) y, width - 10, height);
 	}
 
