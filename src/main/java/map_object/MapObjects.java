@@ -27,9 +27,6 @@ public abstract class MapObjects {
         return new Rectangle((int) x + 5, (int) y, width - 10, height);
     }
 
-    public int getWidth() {
-        return width;
-    }
 
     public int getHeight() {
         return height;

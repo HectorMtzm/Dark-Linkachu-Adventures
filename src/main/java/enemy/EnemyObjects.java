@@ -14,6 +14,7 @@ public abstract class EnemyObjects {
 	int width, height;
 	float velX = 0, velY = 0;
 	float x, y;
+	int randomNum;
 
 	public EnemyObjects() {
 		GameFrame.allEnemies.add(this);
@@ -45,7 +46,4 @@ public abstract class EnemyObjects {
 		return isAlive;
 	}
 
-	public int getWidth() {
-		return width;
-	}
 }

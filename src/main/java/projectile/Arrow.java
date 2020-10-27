@@ -14,9 +14,8 @@ import javax.swing.ImageIcon;
 public class Arrow extends ProjectileObjects {
 	final Image arrowR = new ImageIcon("src/main/resources/images/Arrow.png").getImage();
 
-	int timeToLive = 60;
-
 	public Arrow(int i, float x, float y) {
+		timeToLive = 60;
 		width = 50;
 		height = 13;
 		velX = i * 6;

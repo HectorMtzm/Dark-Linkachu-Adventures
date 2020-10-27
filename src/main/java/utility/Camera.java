@@ -1,33 +1,23 @@
 package utility;
 
-import player.GameObjects;
-import player.Player;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Camera extends GameObjects {
+public class Camera {
 
-	public Camera(float x, float y) {
-		this.x = x;
-		this.y = y;
-		width = 960;
-		height = 720;
+	private float x, y;
+
+	public Camera() {
 	}
 
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.translate(x, y);
-		move(GameFrame.getPlayer());
+		move();
 		g2d.translate(-x, -y);
-
 	}
 
 	public void move() {
-
-	}
-
-	public void move(Player player) {
 		if (GameFrame.getPlayer().getX() < 960 / 2 - 60)
 			x = 0;
 		else if (GameFrame.getPlayer().getX() > GameFrame.getLevelWidth())
@@ -41,4 +31,11 @@ public class Camera extends GameObjects {
 			y = (GameFrame.getPlayer().getY() - 500);
 	}
 
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
 }

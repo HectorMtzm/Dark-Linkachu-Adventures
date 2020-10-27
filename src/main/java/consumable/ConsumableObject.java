@@ -7,7 +7,8 @@ import java.awt.*;
 public abstract class ConsumableObject {
 
     boolean isAlive = true;
-    int width = 90, height = 90;
+    final int width = 50;
+    final int height = 50;
     float velX = 0, velY = 0;
     float x, y;
 
@@ -24,7 +25,7 @@ public abstract class ConsumableObject {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int) x + 5, (int) y, width - 10, height);
+        return new Rectangle((int) x, (int) y, width, height);
     }
 
     public Rectangle getBoundsTOP() {
@@ -41,10 +42,6 @@ public abstract class ConsumableObject {
 
     public Rectangle getBoundsRight() {
         return new Rectangle((int) x + width - 10, (int) y + 5, 5, height - 10);
-    }
-
-    public void setVelY(float y) {
-        velY = y;
     }
 
     public boolean isAlive() {

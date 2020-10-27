@@ -15,6 +15,4 @@ public class BlockU extends UntouchableObjects {
         g.drawImage(block, (int) x, (int) y, null);
     }
 
-    public void move() {
-    }
 }

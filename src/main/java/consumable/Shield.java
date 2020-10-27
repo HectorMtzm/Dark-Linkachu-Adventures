@@ -11,14 +11,12 @@ public class Shield extends ConsumableObject {
 	static final Image shield = new ImageIcon("src/main/resources/images/shield.png").getImage();
 
 	public Shield(float x, float y) {
-		this.x = x;
+		this.x = x + 20;
 		this.y = y;
-		this.width = 90;
-		this.height = 90;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(shield, (int) x, (int) y, null);
+		g.drawImage(shield, (int) x-5, (int) y, 60, 60, null);
 	}
 
 	public void move() {

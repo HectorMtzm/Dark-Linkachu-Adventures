@@ -16,18 +16,24 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
-public class Player extends GameObjects implements KeyListener {
-	static boolean CREATELEVEL1 = false;
+public class Player implements KeyListener {
 	final Image playerR = new ImageIcon("src/main/resources/images/player.png").getImage();
 
-	boolean jumping = false, falling = true;
-	boolean moveRight, moveLeft;
-	boolean guard, superS;
-	boolean shoot;
-	int numOfGems;
-	int arrows = 0;
-	long lastFireTime;
-	long takeStar;
+	private boolean isRight;
+	private float gravity = 0.1f;
+	private final int width;
+	private final int height;
+	private float velX, velY;
+	private float x, y;
+
+	private boolean jumping = false;
+	private boolean moveRight, moveLeft;
+	private boolean guard, superS;
+	private boolean shoot;
+	private int arrows = 0;
+	private int numOfGems;
+	private long lastFireTime;
+	private long takeStar;
 
 	public Player() {
 		x = 20;
@@ -68,23 +74,21 @@ public class Player extends GameObjects implements KeyListener {
 					if (getBounds().intersects(mapObject.getBounds())) {
 						GameFrame.sound.playSound(Sounds.youDie);
 						playerDie();
+						break;
 					}
 				}
 			}
 			else if (mapObject instanceof Block) {
-				collisionTopSidesBottom(mapObject);
+				blocksTopSidesCollisionDetection(mapObject);
 				if (getBoundsTop().intersects(mapObject.getBounds())) {
 					velY = 0;
 					y = y + mapObject.getHeight() - mapObject.getHeight() + 1;
-					falling = true;
-					jumping = false;
 				}
 			}
 			else if (mapObject instanceof SpecialBlocks) {
 				if (getBoundsTop().intersects(mapObject.getBounds())) {
 					y = y + 1;
 					velY = 0;
-					falling = true;
 					if (mapObject.hit == 1) {
 						mapObject.hit--;
 						if (((SpecialBlocks) mapObject).getObject() == 1)
@@ -96,45 +100,22 @@ public class Player extends GameObjects implements KeyListener {
 						}
 					}
 				}
-				collisionTopSidesBottom(mapObject);
+				blocksTopSidesCollisionDetection(mapObject);
 			}
 		}
 
 		for (EnemyObjects enemy : GameFrame.allEnemies){
 			if (enemy instanceof MonsterFire) {
-				if (getBounds().intersects(enemy.getBounds())) {
-					if (superS) {
-						enemy.die(false);
-					}
-					else if (guard) {
-						GameFrame.sound.playSound(Sounds.shield);
-						enemy.die(false);
-						guard = false;
-					}
-					else {
-						playerDie();
-					}
-				}
+				if (monstersSideCollisionDetection(enemy)) break;
 			}
 
 			else if (enemy instanceof MonsterH || enemy instanceof MonsterV) {
 				if (getBoundsBottom().intersects(enemy.getBounds())) {
 					enemy.die(false);
 					velY = -5f;
-					falling = false;
 				}
 
-				else if (getBounds().intersects(enemy.getBounds())) {
-					if (guard) {
-						GameFrame.sound.playSound(Sounds.shield);
-						enemy.die(false);
-						guard = false;
-					} else if (superS) {
-						enemy.die(false);
-					} else {
-						playerDie();
-					}
-				}
+				else if (monstersSideCollisionDetection(enemy)) break;
 
 			}
 
@@ -143,6 +124,7 @@ public class Player extends GameObjects implements KeyListener {
 				else if (getBounds().intersects(enemy.getBounds())) {
 					guard = false;
 					playerDie();
+					break;
 				}
 			}
 		}
@@ -170,6 +152,7 @@ public class Player extends GameObjects implements KeyListener {
 					}
 					else {
 						playerDie();
+						break;
 					}
 				}
 			}
@@ -195,13 +178,27 @@ public class Player extends GameObjects implements KeyListener {
 			superS = false;
 		}
 
-		if(CREATELEVEL1){
-			new LevelCreator("level1");
-			CREATELEVEL1=false;
-		}
 	}
 
-	private void collisionTopSidesBottom(MapObjects mapObject) {
+	private boolean monstersSideCollisionDetection(EnemyObjects enemy) {
+		if (getBounds().intersects(enemy.getBounds())) {
+			if (superS) {
+				enemy.die(false);
+			}
+			else if (guard) {
+				GameFrame.sound.playSound(Sounds.shield);
+				enemy.die(false);
+				guard = false;
+			}
+			else {
+				playerDie();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void blocksTopSidesCollisionDetection(MapObjects mapObject) {
 		if (getBoundsBottom().intersects(mapObject.getBounds())) {
 			y = mapObject.getY() - 88;
 			jumping = false;
@@ -212,15 +209,44 @@ public class Player extends GameObjects implements KeyListener {
 		if (getBoundsRight().intersects(mapObject.getBounds())) {
 			velX = 0;
 
-			if (!getBoundsLeft().intersects(mapObject.getBounds()) && moveLeft)
+			if (moveLeft)
 				velX -= 1;
 		}
 		else if (getBoundsLeft().intersects(mapObject.getBounds())) {
 			velX = 0;
 
-			if (!getBoundsRight().intersects(mapObject.getBounds()) && moveRight)
+			if (moveRight)
 				velX += 1;
 		}
+	}
+
+	// Returns player to level 1
+	public void playerDie(){
+		GameFrame.sound.playSound(Sounds.youDie);
+		Flag.setLevel(1);
+		GameFrame.clearLvl();
+		new LevelCreator("level1");
+		guard = false;
+	}
+
+	public Rectangle getBounds() {
+		return new Rectangle((int) x + 5, (int) y, width - 10, height);
+	}
+
+	public Rectangle getBoundsTop() {
+		return new Rectangle((int) x + (width / 2 - 5) - ((width / 2) / 2), (int) y, width / 2 + 10, height / 2);
+	}
+
+	public Rectangle getBoundsBottom() {
+		return new Rectangle((int) x + (width / 2 - 5) - ((width / 2) / 2), (int) y + (height / 2) + 1, width / 2 + 10,	height / 2);
+	}
+
+	public Rectangle getBoundsLeft() {
+		return new Rectangle((int) x + 5, (int) y + 5, 5, height - 10);
+	}
+
+	public Rectangle getBoundsRight() {
+		return new Rectangle((int) x + width - 10, (int) y + 5, 5, height - 10);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -290,5 +316,21 @@ public class Player extends GameObjects implements KeyListener {
 
 	public boolean isGuard() {
 		return guard;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setY(float y) {
+		this.y = y;
 	}
 }

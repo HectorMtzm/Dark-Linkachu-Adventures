@@ -1,29 +1,21 @@
 package consumable;
 
-import consumable.ConsumableObject;
 import utility.GameFrame;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 import javax.swing.ImageIcon;
 
 public class GBow extends ConsumableObject {
-	static final Image gbow = new ImageIcon("src/main/resources/images/gbow.png").getImage();
+	static final Image bow = new ImageIcon("src/main/resources/images/bow.png").getImage();
 
 	public GBow(float x, float y) {
-		this.x = x;
+		this.x = x + 20;
 		this.y = y;
-		this.width = 90;
-		this.height = 90;
 	}
 
 	public void draw(Graphics g) {
-		AffineTransform at = new AffineTransform();
-		at.setTransform(GameFrame.getIdentity());
-		at.translate(x, y);
-		Graphics2D gb = (Graphics2D) g;
-		gb.drawImage(gbow, at, null);
+		g.drawImage(bow, (int) x-5, (int) y, 60, 60, null);
 	}
 
 	public void move() {

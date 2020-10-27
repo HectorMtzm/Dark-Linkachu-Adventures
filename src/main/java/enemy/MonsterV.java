@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 
 public class MonsterV extends EnemyObjects {
 	static final Image monsterV = new ImageIcon("src/main/resources/images/monsterB.png").getImage();
-	int Rnum;
 
 	public MonsterV(float x, float y, int velY) {
 		width = 90;
@@ -31,8 +30,8 @@ public class MonsterV extends EnemyObjects {
 
 	@Override
 	public void move() {
-		Rnum = (int) (1 + Math.random() * 400);
-		if (Rnum == 26)
+		randomNum = (int) (1 + Math.random() * 400);
+		if (randomNum == 26)
 			new FireBall(GameFrame.getPlayer().getX() > x ? 1 : -1, 0, x + (width/2), y  + (height/2));
 		y += velY;
 

@@ -9,17 +9,17 @@ public class Sounds extends Thread{
 	private File soundFile;
 
 	//Sounds
-	public static final String bossLevel = "bosslvl.wav";
+	public static final String bossLevel = "bossLvl.wav";
 	public static final String bossDie = "bossDie.wav";
 	public static final String youDie = "youDie.wav";
 	public static final String shield = "shieldTake.wav";
 	public static final String arrow = "arrow.wav";
-	public static final String monsterDie = "monsterdie.wav";
-	public static final String monsterHurt = "hurtmonster.wav";
+	public static final String monsterDie = "monsterDie.wav";
+	public static final String monsterHurt = "monsterHurt.wav";
 	public static final String fireball = "fire.wav";
 	public static final String gem = "gem.wav";
-	public String jump = "jump.wav";
-	public String spikes = "spikes.wav";
+//	public static final String jump = "jump.wav";
+//	public static final String spikes = "spikes.wav";
 
 	public Sounds() {
 	}

@@ -8,6 +8,7 @@ public abstract class ProjectileObjects {
 
     boolean isAlive = true;
     int width, height;
+    int timeToLive;
     float velX = 0, velY = 0;
     float x, y;
 

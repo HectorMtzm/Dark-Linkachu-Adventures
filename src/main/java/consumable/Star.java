@@ -3,7 +3,6 @@ package consumable;
 import map_object.Block;
 import map_object.MapObjects;
 import map_object.SpecialBlocks;
-import player.Player;
 import utility.GameFrame;
 
 import java.awt.*;
@@ -12,20 +11,18 @@ import javax.swing.ImageIcon;
 
 public class Star extends ConsumableObject {
 	public static final Image star = new ImageIcon("src/main/resources/images/star.png").getImage();
-	float gravity = .5f;
+	float gravity = .3f;
 	boolean jump = false, falling = true;
 
 	public Star(float x, float y) {
-		this.x = x;
+		this.x = x + 20;
 		this.y = y;
-		width = 90;
-		height = 90;
 		velX = -1;
 		velY = -1;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(star, (int) x, (int) y, null);
+		g.drawImage(star, (int) x-5, (int) y, 60, 60, null);
 	}
 
 	public void move() {

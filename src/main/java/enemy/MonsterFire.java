@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
 public class MonsterFire extends EnemyObjects {
 	final Image monsterFR = new ImageIcon("src/main/resources/images/monsterF.png").getImage();
 
-	int Rnum;
-
 	public MonsterFire(float x, float y) {
 		width = 95;
 		height = 95;
@@ -35,8 +33,8 @@ public class MonsterFire extends EnemyObjects {
 
 	@Override
 	public void move() {
-		Rnum = (int) (1 + Math.random() * 600);
-		if (Rnum == 26) {
+		randomNum = (int) (1 + Math.random() * 600);
+		if (randomNum == 26) {
 			new FireBall(isRight ? 1 : -1, 0, x, y);
 		}
 	}

@@ -8,14 +8,12 @@ public class Gems extends ConsumableObject {
 	static final Image gems = new ImageIcon("src/main/resources/images/gemY.png").getImage();
 
 	public Gems(float x, float y) {
-		this.x = x;
+		this.x = x + 20;
 		this.y = y;
-		width = 69;
-		height = 55;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(gems, (int) x, (int) y, null);
+		g.drawImage(gems, (int) x-10, (int) y, null);
 	}
 
 	public void move() {

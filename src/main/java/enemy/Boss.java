@@ -12,7 +12,6 @@ import javax.swing.ImageIcon;
 
 public class Boss extends EnemyObjects {
 	static final Image bossR = new ImageIcon("src/main/resources/images/bossP.png").getImage();
-	int Rnum;
 
 	public Boss(float x, float y) {
 		width = 250;
@@ -27,7 +26,8 @@ public class Boss extends EnemyObjects {
 		if (GameFrame.getPlayer().getX() > x) {
 			g.drawImage(bossR, (int) x, (int) y, width, height, null);
 			isRight = true;
-		} else {
+		}
+		else {
 			g.drawImage(bossR, (int) x + width, (int) y,-width, height, null);
 			isRight = false;
 		}
@@ -40,16 +40,13 @@ public class Boss extends EnemyObjects {
 
 	@Override
 	public void move() {
-		Rnum = (int) (1 + Math.random() * 300);
-		if (Rnum == 26)
+		randomNum = (int) (1 + Math.random() * 300);
+		if (randomNum == 26)
 			new FireBall(isRight ? 1 : -1, 0, x + (width / 2), y - 30);
-		else if (Rnum == 226)
-			new FireBall(isRight ? 1 : -1, 0, x + (width / 2), y + 90);
-		else if (Rnum == 126)
+		else if (randomNum == 126)
 			new FireBall(isRight ? 1 : -1, 0, x + (width / 2), y + 210);
-		if (GameFrame.getPlayer().getX() > x) {
-			if (Rnum == 175)
-				new FireBall(0, -1, x + (width / 2), y);
+		if (GameFrame.getPlayer().getX() > x && randomNum == 175) {
+			new FireBall(0, -1, x + (width / 2), y);
 		}
 
 		for (ProjectileObjects projectile : GameFrame.allProjectiles) {

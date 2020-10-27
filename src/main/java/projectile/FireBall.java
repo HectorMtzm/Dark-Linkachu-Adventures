@@ -1,5 +1,6 @@
 package projectile;
 
+import map_object.MapObjects;
 import utility.GameFrame;
 import utility.Sounds;
 
@@ -8,9 +9,9 @@ import javax.swing.ImageIcon;
 
 public class FireBall extends ProjectileObjects {
 	final Image fireball = new ImageIcon("src/main/resources/images/fireball.png").getImage();
-	int timeToLive = 100;
 
 	public FireBall(int v, int h, float x, float y) {
+		timeToLive = 100;
 		width = 20;
 		height = 20;
 		velX = v * 4;
@@ -34,6 +35,13 @@ public class FireBall extends ProjectileObjects {
 		x += velX;
 		if (timeToLive <= 0)
 			die();
+		else {
+			for (MapObjects mapObject : GameFrame.allMapObjects){
+				if (getBounds().intersects(mapObject.getBounds())){
+					die();
+				}
+			}
+		}
 	}
 
 }
